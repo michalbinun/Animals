@@ -1,71 +1,87 @@
-# Define the abstract class Animal
-class Animal:
-    def __init__(self, sound_when_greeting, sound_when_happy, sound_when_frightened):
-        self.sound_when_greeting = sound_when_greeting
-        self.sound_when_happy = sound_when_happy
-        self.sound_when_frightened = sound_when_frightened
+from abc import ABC, abstractmethod
 
-    def greet(self):
-        print(self.sound_when_greeting)
-
-    def express_happiness(self):
-        print(self.sound_when_happy)
-
-    def express_fear(self):
-        print(self.sound_when_frightened)
-
-
-# Define the abstract class Animal
-class Animal:
-    def __init__(self, name):
-        self.name = name
-
-    def greet(self):
+class Animal(ABC):
+    def __init__(self, is_mammal, is_carnivorous, happy_mood=0, scared_mood=0):
+        self.is_mammal = is_mammal
+        self.is_carnivorous = is_carnivorous
+        self.happy_mood = happy_mood
+        self.scared_mood = scared_mood
+    
+    @abstractmethod
+    def say_hello(self):
         pass
-
-    def make_sound(self):
+    
+    @abstractmethod
+    def get_number_of_legs(self):
         pass
+    
+    def is_mammal(self):
+        return self.is_mammal
+    
+    def set_mammal(self, is_mammal):
+        self.is_mammal = is_mammal
+    
+    def is_carnivorous(self):
+        return self.is_carnivorous
+    
+    def set_carnivorous(self, is_carnivorous):
+        self.is_carnivorous = is_carnivorous
 
 
-# Define the subclass Dog
 class Dog(Animal):
-    def greet(self):
-        return f"{self.name} wagging its tail"
-
-    def make_sound(self, feeling):
-        if feeling == "comfortable":
-            return f"{self.name} barking loudly"
-        elif feeling == "frightened":
-            return f"{self.name} making a whooping sound"
-        else:
-            return f"{self.name} making an unknown sound"
+    def __init__(self, is_mammal, is_carnivorous, happy_mood=0, scared_mood=0):
+        super().__init__(is_mammal, is_carnivorous, happy_mood, scared_mood)
+    
+    def say_hello(self):
+        print("The dog wags its tail and barks loudly.")
+    
+    def get_number_of_legs(self):
+        return 4
 
 
-# Define the subclass Cat
 class Cat(Animal):
-    def greet(self):
-        return f"{self.name} meowing"
-
-    def make_sound(self, feeling):
-        if feeling == "good mood":
-            return f"{self.name} purring"
-        elif feeling == "frightened":
-            return f"{self.name} hissing"
-        else:
-            return f"{self.name} making an unknown sound"
+    def __init__(self, is_mammal, is_carnivorous, happy_mood=0, scared_mood=0):
+        super().__init__(is_mammal, is_carnivorous, happy_mood, scared_mood)
+    
+    def say_hello(self):
+        print("The cat meows~")
+    
+    def get_number_of_legs(self):
+        return 4
 
 
-# Testing the code
+class Frog(Animal):
+    def __init__(self, is_mammal, is_carnivorous, happy_mood=0, scared_mood=0):
+        super().__init__(is_mammal, is_carnivorous, happy_mood, scared_mood)
+    
+    def say_hello(self):
+        print("The frog quacks quack quack on the shore.")
+    
+    def get_number_of_legs(self):
+        return 4
+
+
 def main():
-    dog = Dog("Buddy")
-    cat = Cat("Whiskers")
+    dog = Dog(True, True)
+    dog.say_hello()
+    print("Number of legs:", dog.get_number_of_legs())
+    dog.set_mammal(False)
+    print("Is mammal?", dog.is_mammal())
 
-    print(dog.greet())  # Output: Buddy wagging its tail
-    print(dog.make_sound("comfortable"))  # Output: Buddy barking loudly
+    print()
 
-    print(cat.greet())  # Output: Whiskers meowing
-    print(cat.make_sound("good mood"))  # Output: Whiskers purring
+    cat = Cat(True, True)
+    cat.say_hello()
+    print("Number of legs:", cat.get_number_of_legs())
+    cat.set_carnivorous(False)
+    print("Is carnivorous?", cat.is_carnivorous())
 
+    print()
+
+    frog = Frog(False, False)
+    frog.say_hello()
+    print("Number of legs:", frog.get_number_of_legs())
 
 if __name__ == "__main__":
     main()
+
